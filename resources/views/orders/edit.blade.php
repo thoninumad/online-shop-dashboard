@@ -35,8 +35,12 @@
                 @endforeach
             </ul>
 
-            <label for="">Total Price</label><br>
-            <input class="form-control" type="number" value="{{$order->total_price, 2}}" disabled>
+            <label for="">Total Bill</label><br>
+            <input class="form-control" type="number" value="{{$order->total_bill}}" disabled>
+            <br>
+
+            <label for="">Courier Service</label><br>
+            <input disabled class="form-control" type="text" value="{{$order->courier_service}}">
             <br>
 
             <label for="status">Status</label><br>
@@ -44,7 +48,7 @@
                 <option {{$order->status == "SUBMIT" ? "selected" : ""}} value="SUBMIT">SUBMIT</option>
                 <option {{$order->status == "PROCESS" ? "selected" : ""}} value="PROCESS">PROCESS</option>
                 <option {{$order->status == "FINISH" ? "selected" : ""}} value="FINISH">FINISH</option>
-                <option {{$order->status == "CANCEL" ? "selected" : ""}} value="CANCEL">SCANCEL</option>
+                <option {{$order->status == "CANCEL" ? "selected" : ""}} value="CANCEL">CANCEL</option>
             </select>
             <br>
 

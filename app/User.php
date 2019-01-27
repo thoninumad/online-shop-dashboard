@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username', 'roles', 'address', 'city_id', 'province_id', 'phone', 'avatar', 'status',
     ];
 
     protected $hidden = [
@@ -20,5 +20,13 @@ class User extends Authenticatable
 
     public function orders() {
         return $this->hasMany('\App\Order');
+    }
+
+    public function province() {
+        return $this->belongsTo('\App\Province');
+    }
+
+    public function city() {
+        return $this->belongsTo('\App\City');
     }
 }

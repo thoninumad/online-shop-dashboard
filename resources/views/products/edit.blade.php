@@ -51,8 +51,18 @@
             </div>
             <br>
 
+            <label for="producer">Producer</label><br>
+            <input type="text" value="{{old('producer') ? old('producer') : $product->producer}}" class="form-control {{$errors->first('producer') ? "is-invalid" : ""}}" name="producer" placeholder="Product Producer">
+            <div class="invalid-feedback">
+                {{$errors->first('producer')}}
+            </div>
+            <br>
+
             <label for="categories">Categories</label><br>
-            <select name="categories[]" multiple id="categories" class="form-control"></select>
+            <select name="categories[]" multiple id="categories" class="form-control {{$errors->first('categories') ? "is-invalid" : ""}}"></select>
+            <div class="invalid-feedback">
+                {{$errors->first('categories')}}
+            </div>
             <br><br>
 
             <label for="stock">Stock</label><br>
@@ -68,6 +78,14 @@
                 {{$errors->first('price')}}
             </div>
             <br>
+
+            <label for="weight">Weight (kg)</label><br>
+            <input type="number" value="{{old('weight') ? old('weight') : $product->weight}}" class="form-control {{$errors->first('weight') ? "is-invalid" : ""}}" name="weight" id="weight" placeholder="Product Weight">
+            <div class="invalid-feedback">
+                {{$errors->first('weight')}}
+            </div>
+            <br>
+
 
             <label for="status">Status</label>
             <select name="status" id="status" class="form-control">

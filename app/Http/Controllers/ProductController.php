@@ -39,18 +39,23 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         \Validator::make($request->all(), [
-            "name" => "required|min:5|max:200",
+            "name" => "required|min:5|max:191",
             "description" => "required|min:20|max:1000",
+            "producer" => "string|max:191",
             "price" => "required|digits_between:0,10",
+            "weight" => "required|digits_between:0,10",
             "stock" => "required|digits_between:0,10",
-            "image" => "required|mimes:jpg,png"
+            "image" => "required|image",
+            "categories" => "required"
         ])->validate();
 
         $new_product = new \App\Product;
 
         $new_product->name = $request->get('name');
         $new_product->description = $request->get('description');
+        $new_product->producer = $request->get('producer');
         $new_product->price = $request->get('price');
+        $new_product->weight = $request->get('weight');
         $new_product->stock = $request->get('stock');
 
         $new_product->status = $request->get('save_action');
@@ -91,21 +96,26 @@ class ProductController extends Controller
         $product = \App\Product::findOrFail($id);
 
         \Validator::make($request->all(), [
-            "name" => "required|min:5|max:200",
+            "name" => "required|min:5|max:191",
             "slug" => [
                 "required",
                 Rule::unique("products")->ignore($product->slug, "slug")
             ],
             "description" => "required|min:20|max:1000",
+            "producer" => "string|max:191",
             "price" => "required|digits_between:0,10",
-            "stock" => "required|digits_between:0,10"
+            "weight" => "required|digits_between:0,10",
+            "stock" => "required|digits_between:0,10",
+            "categories" => "required"
         ])->validate();
 
         $product->name = $request->get('name');
         $product->slug = $request->get('slug');
         $product->description = $request->get('description');
+        $product->producer = $request->get('producer');
         $product->stock = $request->get('stock');
         $product->price = $request->get('price');
+        $product->weight = $request->get('weight');
 
         $new_image = $request->file('image');
 
@@ -157,6 +167,9 @@ class ProductController extends Controller
         } else {
             $product->categories()->detach();
             $product->forceDelete();
+            if($product->image && file_exists(storage_path('app/public/'.$product->image))) {
+                \Storage::delete('public/'.$product->image);
+            }
 
             return redirect()->route('products.trash')->with('status', 'Product permanently deleted!');
         }

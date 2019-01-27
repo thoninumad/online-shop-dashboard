@@ -38,7 +38,7 @@ class CategoryController extends Controller
     {
         \Validator::make($request->all(), [
             "name" => "required|min:3|max:20",
-            "image" => "required|mimes:jpg,png"
+            "image" => "required|image"
         ])->validate();
 
         $name = $request->get('name');
@@ -137,6 +137,9 @@ class CategoryController extends Controller
             return redirect()->route('categories.index')->with('status', 'Can not delete permanent active category');
         } else {
             $category->forceDelete();
+            if($category->image && file_exists(storage_path('app/public/'.$category->image))) {
+                \Storage::delete('public/'.$category->image);
+            }
 
             return redirect()->route('categories.index')->with('status', 'Category permanently deleted');
         }

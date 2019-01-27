@@ -49,13 +49,13 @@ class UserController extends Controller
     {
         \Validator::make($request->all(), [
             "name" => "required|min:5|max:100",
-            "username" => "required|min:5|max:20",
+            "username" => "required|min:5|max:20|unique:users",
             "roles" => "required",
             "phone" => "required|digits_between:10,12",
             "address" => "required|min:20|max:200",
-            "avatar" => "required|mimes:jpg,png",
-            "email" => "required|email",
-            "password" => "required",
+            "avatar" => "required|image",
+            "email" => "required|email|unique:users",
+            "password" => "required|min:6",
             "password_confirmation" => "required|same:password"
         ])->validate();
 
@@ -80,7 +80,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = \App\User::findOrFail($id);
+        $user = \App\User::with('province')->with('city')->findOrFail($id);
         return view('users.show', ['user'=> $user]);
     }
 
@@ -125,6 +125,10 @@ class UserController extends Controller
         $user = \App\User::findOrFail($id);
 
         $user->delete();
+        if($user->avatar && file_exists(storage_path('app/public/'.$user->avatar))) {
+            \Storage::delete('public/'.$user->avatar);
+        }
+
         return redirect()->route('users.index')->with('status', 'User successfully deleted.');
 
     }

@@ -27,7 +27,7 @@
 <hr class="my-3">
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="table-responsive">
         <table class="table table-stripped table-bordered">
             <thead>
                 <tr>
@@ -36,7 +36,7 @@
                     <th><b>Buyer</b></th>
                     <th><b>Total Quantity</b></th>
                     <th><b>Order Date</b></th>
-                    <th><b>Total Price</b></th>
+                    <th><b>Total Bill</b></th>
                     <th><b>Action</b></th>
                 </tr>
             </thead>
@@ -61,7 +61,7 @@
                         </td>
                         <td>{{$order->totalQuantity}} pc (s)</td>
                         <td>{{$order->created_at}}</td>
-                        <td>{{number_format($order->total_price, 2)}}</td>
+                        <td>{{number_format($order->total_bill, 2)}}</td>
                         <td>
                             <a href="{{route('orders.edit', ['id' => $order->id])}}" class="btn btn-info btn-sm">Edit</a>
                         </td>

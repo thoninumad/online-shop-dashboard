@@ -25,3 +25,9 @@ Route::delete('/products/{id}/delete-permanent', 'ProductController@deletePerman
 Route::resource('products', 'ProductController');
 
 Route::resource('orders', 'OrderController');
+
+Route::get('/profile', 'ProfileController@index')->name('profile');
+Route::get('/edit-profile', 'ProfileController@edit')->name('profile.edit');
+Route::get('/change-password', 'ProfileController@changePassword')->name('profile.change-password');
+Route::put('/profile', 'ProfileController@update')->name('profile.update');
+Route::put('/update-password', 'ProfileController@updatePassword')->name('profile.update-password');

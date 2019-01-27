@@ -25,6 +25,10 @@
             {{$product->description}}
             <br><br>
 
+            <label><b>Product Producer</b></label><br>
+            {{$product->producer}}
+            <br><br>
+
             <label><b>Product Categories</b></label><br>
             <ul class="pl-3">
             @foreach($product->categories as $category)
@@ -39,6 +43,10 @@
 
             <label><b>Product Price</b></label><br>
             Rp. {{number_format($product->price, 2)}}
+            <br><br>
+
+            <label><b>Product Weight</b></label><br>
+            {{$product->weight}} kg
 
         </div>
     </div>

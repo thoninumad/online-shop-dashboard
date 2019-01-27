@@ -42,62 +42,66 @@
             </div>
         </div>
 
-        <table class="table table-bordered tabel-stripped">
-            <thead>
-                <tr>
-                    <th><b>Image</b></th>
-                    <th><b>Name</b></th>
-                    <th><b>Status</b></th>
-                    <th><b>Categories</b></th>
-                    <th><b>Stock</b></th>
-                    <th><b>Price</b></th>
-                    <th><b>Action</b></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($products as $product)
-                    <tr>
-                        <td>
-                            @if($product->image)
-                                <img src="{{asset('storage/'.$product->image)}}" width="96px"/>
-                            @endif
-                        </td>
-                        <td>{{$product->name}}</td>
-                        <td>
-                            @if($product->status == "DRAFT")
-                                <span class="badge bg-dark text-white">{{$product->status}}</span>
-                            @else
-                                <span class="badge badge-success">{{$product->status}}</span>
-                            @endif
-                        </td>
-                        <td>
-                            <ul class="pl-3">
-                            @foreach($product->categories as $category)
-                                <li>{{$category->name}}</li>
-                            @endforeach
-                            </ul>
-                        </td>
-                        <td>{{$product->stock}}</td>
-                        <td>{{number_format($product->price, 2)}}</td>
-                        <td>
-                            <a href="{{route('products.edit', ['id' => $product->id])}}" class="btn btn-info btn-sm">Edit</a>
-                            <a href="{{route('products.show', ['id' => $product->id])}}" class="btn btn-primary btn-sm">Detail</a>
-                            <form method="POST" class="d-inline" onsubmit="return confirm('Move product to trash?')" action="{{route('products.destroy', ['id' => $product->id])}}">
-                                @csrf
-                                <input type="hidden" value="DELETE" name="_method">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered tabel-stripped">
+                    <thead>
+                        <tr>
+                            <th><b>Image</b></th>
+                            <th><b>Name</b></th>
+                            <th><b>Status</b></th>
+                            <th><b>Categories</b></th>
+                            <th><b>Stock</b></th>
+                            <th><b>Price</b></th>
+                            <th><b>Action</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($products as $product)
+                            <tr>
+                                <td>
+                                    @if($product->image)
+                                        <img src="{{asset('storage/'.$product->image)}}" width="96px"/>
+                                    @endif
+                                </td>
+                                <td>{{$product->name}}</td>
+                                <td>
+                                    @if($product->status == "DRAFT")
+                                        <span class="badge bg-dark text-white">{{$product->status}}</span>
+                                    @else
+                                        <span class="badge badge-success">{{$product->status}}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <ul class="pl-3">
+                                    @foreach($product->categories as $category)
+                                        <li>{{$category->name}}</li>
+                                    @endforeach
+                                    </ul>
+                                </td>
+                                <td>{{$product->stock}}</td>
+                                <td>{{number_format($product->price, 2)}}</td>
+                                <td>
+                                    <a href="{{route('products.edit', ['id' => $product->id])}}" class="btn btn-info btn-sm">Edit</a>
+                                    <a href="{{route('products.show', ['id' => $product->id])}}" class="btn btn-primary btn-sm">Detail</a>
+                                    <form method="POST" class="d-inline" onsubmit="return confirm('Move product to trash?')" action="{{route('products.destroy', ['id' => $product->id])}}">
+                                        @csrf
+                                        <input type="hidden" value="DELETE" name="_method">
 
-                                <input type="submit" value="Trash" class="btn btn-danger btn-sm">
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="10">{{$products->appends(Request::all())->links()}}</td>
-                </tr>
-            </tfoot>
-        </table>
+                                        <input type="submit" value="Trash" class="btn btn-danger btn-sm">
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="10">{{$products->appends(Request::all())->links()}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

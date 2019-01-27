@@ -1,9 +1,16 @@
 @extends('layouts.global')
 
-@section('title') Detail User @endsection
+@section('title') My Profile @endsection
 
 @section('content')
+
 <div class="col-md-8">
+    @if(session('status'))
+        <div class="alert alert-success">
+            {{session('status')}}
+        </div>
+    @endif
+
     <div class="card">
         <div class="card-body">
             <b>Name : </b><br>
@@ -33,18 +40,6 @@
             @endif
 
             <br><br>
-            <b>Province : </b><br>
-            @if($user->province_id)
-                {{$user->province->province}}
-            @endif
-
-            <br><br>
-            <b>City : </b><br>
-            @if($user->city_id)
-                {{$user->city->city_name}}
-            @endif
-
-            <br><br>
             <b>Roles : </b><br>
             @foreach(json_decode($user->roles) as $role)
                 &middot; {{$role}} <br>
@@ -53,6 +48,10 @@
             <br>
             <b>Email : </b><br>
             {{$user->email}}
+            <br><br>
+
+            <a class="btn btn-info text-white btn-sm" href="{{route('profile.edit')}}">Edit Profile</a>
+            <a class="btn btn-warning text-white btn-sm" href="{{route('profile.change-password')}}">Change Password</a>
         </div>
     </div>
   </div>
