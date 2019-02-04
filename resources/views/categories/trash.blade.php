@@ -10,13 +10,13 @@
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Filter by category name" name="name" value="{{Request::get('name')}}">
                 <div class="input-group-append">
-                    <input type="submit" value="Filter" class="btn btn-primary">
+                    <input type="submit" value="Filter" class="btn" style="background-color:#bd1544;color:#fff;">
                 </div>
             </div>
         </form>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-sm-6" >
         <ul class="nav nav-pills card-header-pills">
             <li class="nav-item"><a class="nav-link" href="{{route('categories.index')}}">Published</a></li>
             <li class="nav-item"><a class="nav-link active" href="{{route('categories.trash')}}">Trash</a></li>

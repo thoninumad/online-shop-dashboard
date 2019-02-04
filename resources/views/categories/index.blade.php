@@ -10,7 +10,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Filter by category name" name="name" value="{{Request::get('name')}}">
                 <div class="input-group-append">
-                    <input type="submit" value="Filter" class="btn btn-primary">
+                    <input type="submit" value="Filter" class="btn" style="background-color:#bd1544;color:#fff;">
                 </div>
             </div>
         </form>
@@ -36,7 +36,7 @@
 
 <div class="row">
     <div class="col-md-12 text-right">
-        <a href="{{route('categories.create')}}" class="btn btn-primary">Create category</a>
+        <a href="{{route('categories.create')}}" class="btn btn-success">Create category</a>
     </div>
 </div>
 <br>
