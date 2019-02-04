@@ -28,11 +28,17 @@
             hr+.display-3, hr+.display-2+.display-3 {
                 margin-bottom: 2rem;
             }
-            .nav{
+            .nav1{
                 background-color:#bd1544;
             }
             .search-field{
                 background-color:#fff;
+            }
+            .btn-link{
+                color:#fff;
+            }
+            .nav-link link:active{
+                background-color:#bd1544;
             }
         </style>
         <script type="text/javascript">
@@ -41,7 +47,7 @@
         </script>
     </head>
     <body>
-        <nav class="navbar navbar-expand p-0 nav">
+        <nav class="navbar navbar-expand p-0 nav1">
             <a class="navbar-brand text-center col-xs-12 col-md-3 col-lg-2 mr-0" href="{{route('home')}}"> PIPPO </a>
             <button class="btn btn-link d-block d-md-none" data-toggle="collapse" data-target="#sidebar-nav" role="button" ><span class="oi oi-menu"></span></button>
             <input class="border-dark bg-primary-darkest form-control d-none d-md-block w-50 ml-3 mr-2 search-field" type="text" placeholder="Search" arialabel="Search">
