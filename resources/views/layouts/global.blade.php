@@ -37,9 +37,6 @@
             .btn-link{
                 color:#fff;
             }
-            .nav-link link:active{
-                background-color:#bd1544;
-            }
         </style>
         <script type="text/javascript">
             document.documentElement.className = document.documentElement.className.replace('no-js', 'js') +
