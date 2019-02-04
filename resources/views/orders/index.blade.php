@@ -19,7 +19,7 @@
             </select>
         </div>
         <div class="col-md-2">
-            <input type="submit" value="Filter" class="btn btn-primary">
+            <input type="submit" value="Filter" class="btn" style="background-color:#bd1544;color:#fff;">
         </div>
     </div>
 </form>
