@@ -18,7 +18,7 @@
             .grid-highlight {
                 padding-top: 1rem;
                 padding-bottom: 1rem;
-                background-color: #5c6ac4;
+                background-color: #f5f5f5;
                 border: 1px solid #202e78;
                 color: #fff;
             }
@@ -28,6 +28,12 @@
             hr+.display-3, hr+.display-2+.display-3 {
                 margin-bottom: 2rem;
             }
+            .nav{
+                background-color:#bd1544;
+            }
+            .search-field{
+                background-color:#fff;
+            }
         </style>
         <script type="text/javascript">
             document.documentElement.className = document.documentElement.className.replace('no-js', 'js') +
@@ -35,10 +41,10 @@
         </script>
     </head>
     <body>
-        <nav class="navbar navbar-expand p-0">
+        <nav class="navbar navbar-expand p-0 nav">
             <a class="navbar-brand text-center col-xs-12 col-md-3 col-lg-2 mr-0" href="{{route('home')}}"> PIPPO </a>
             <button class="btn btn-link d-block d-md-none" data-toggle="collapse" data-target="#sidebar-nav" role="button" ><span class="oi oi-menu"></span></button>
-            <input class="border-dark bg-primary-darkest form-control d-none d-md-block w-50 ml-3 mr-2" type="text" placeholder="Search" arialabel="Search">
+            <input class="border-dark bg-primary-darkest form-control d-none d-md-block w-50 ml-3 mr-2 search-field" type="text" placeholder="Search" arialabel="Search">
             <div class="dropdown d-none d-md-block">
                 @if(\Auth::user())
                 <img class="d-none d-lg-inline rounded-circle ml-1" width="32px" src="{{asset('storage/'.Auth::user()->avatar)}}" alt="{{Auth::user()->name}}"/>

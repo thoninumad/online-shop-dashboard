@@ -25,6 +25,9 @@
             hr+.display-3, hr+.display-2+.display-3 {
                 margin-bottom: 2rem;
             }
+            .nav{
+                background-color:#ededed;
+            }
         </style>
         <script type="text/javascript">
             document.documentElement.className = document.documentElement.className.replace('no-js', 'js') +
@@ -32,8 +35,8 @@
         </script>
     </head>
     <body>
-        <nav class="navbar navbar-expand p-0">
-            <a class="navbar-brand text-center col-xs-12 col-md-3 col-lg-2 mr-0" href="{{route('home')}}"> PIPPO </a>
+        <nav class="navbar navbar-expand p-0 nav">
+            <a class="navbar-brand text-center col-xs-12 col-md-3 col-lg-2 mr-0" href="{{route('home')}}" style="color:#000;font-weight:700;"> PIPPO </a>
             <button class="btn btn-link d-block d-md-none" data-toggle="collapse" data-target="#sidebar-nav" role="button" ><span class="oi oi-menu"></span></button>
         </nav>
         <div class="container-fluid h-100 p-0">
