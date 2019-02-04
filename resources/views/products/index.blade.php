@@ -19,7 +19,7 @@
                     <div class="input-group">
                         <input name="keyword" type="text" value="{{Request::get('keyword')}}" class="form-control" placeholder="Filter by name">
                         <div class="input-group-append">
-                            <input type="submit" value="Filter" class="btn btn-primary">
+                            <input type="submit" value="Filter" class="btn"  style="background-color:#bd1544;color:#fff;">
                         </div>
                     </div>
                 </form>
@@ -38,7 +38,7 @@
 
         <div class="row mb-3">
             <div class="col-md-12 text-right">
-                <a href="{{route('products.create')}}" class="btn btn-primary">Create product</a>
+                <a href="{{route('products.create')}}" class="btn btn-success">Create product</a>
             </div>
         </div>
 
