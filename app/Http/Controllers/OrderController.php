@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
+use App\Mail\OrderShipped;
+use App\Mail\OrderFinished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -27,6 +30,7 @@ class OrderController extends Controller
             $query->where('email', 'LIKE', "%$buyer_email%");
         })
         ->where('status', 'LIKE', "%$status%")
+        ->orderBy('id', 'DESC')
         ->paginate(10);
         return view('orders.index', ['orders' => $orders]);
     }
@@ -42,7 +46,15 @@ class OrderController extends Controller
         $order = \App\Order::findOrFail($id);
 
         $order->status = $request->get('status');
+        $order->receipt_number = $request->get('receipt_number');
         $order->save();
+
+        if($order->receipt_number!='' AND $order->status=='PROCESS') {
+            Mail::to($order->user->email)->send(new OrderShipped($order));
+        } else if($order->status=='FINISH') {
+            Mail::to($order->user->email)->send(new OrderFinished($order));
+        }
+
         return redirect()->route('orders.edit', ['id' => $order->id])->with('status', 'Order status successfully updated');
     }
 

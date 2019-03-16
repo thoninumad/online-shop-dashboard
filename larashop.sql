@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Jan 2019 pada 01.51
+-- Waktu pembuatan: 16 Mar 2019 pada 03.51
 -- Versi server: 10.1.26-MariaDB
 -- Versi PHP: 7.1.8
 
@@ -89,7 +89,9 @@ INSERT INTO `category_product` (`id`, `product_id`, `category_id`, `created_at`,
 (22, 18, 3, NULL, NULL),
 (23, 18, 5, NULL, NULL),
 (24, 19, 5, NULL, NULL),
-(25, 15, 2, NULL, NULL);
+(25, 15, 2, NULL, NULL),
+(26, 20, 1, NULL, NULL),
+(27, 20, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -656,7 +658,9 @@ CREATE TABLE `orders` (
   `total_bill` double(12,2) UNSIGNED NOT NULL,
   `invoice_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `courier_service` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('SUBMIT','PROCESS','FINISH','CANCEL') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('SUBMIT','PENDING','PROCESS','FINISH','CANCEL') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_evidence` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `receipt_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -665,21 +669,26 @@ CREATE TABLE `orders` (
 -- Dumping data untuk tabel `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `total_bill`, `invoice_number`, `courier_service`, `status`, `created_at`, `updated_at`) VALUES
-(3, 6, 2124000.00, '20190123132713', 'jne-REG', 'CANCEL', '2019-01-23 06:27:13', '2019-01-26 16:47:52'),
-(4, 1, 235000.00, '20190123185401', 'pos-Express Next Day Barang', 'PROCESS', '2019-01-23 11:54:01', '2019-01-26 16:47:20'),
-(5, 3, 769200.00, '20190123194306', 'tiki-ECO', 'SUBMIT', '2019-01-23 12:43:06', '2019-01-23 12:43:06'),
-(6, 3, 347000.00, '20190123195015', 'pos-Paket Kilat Khusus', 'SUBMIT', '2019-01-23 12:50:15', '2019-01-23 12:50:15'),
-(7, 8, 347500.00, '20190123195819', 'jne-CTCYES', 'SUBMIT', '2019-01-23 12:58:19', '2019-01-23 12:58:19'),
-(8, 1, 263000.00, '20190123200710', 'jne-CTC', 'SUBMIT', '2019-01-23 13:07:10', '2019-01-23 13:07:11'),
-(9, 4, 965000.00, '20190124025629', 'tiki-SDS', 'SUBMIT', '2019-01-23 19:56:29', '2019-01-23 19:56:30'),
-(10, 1, 351500.00, '20190124164516', 'tiki-TRC', 'SUBMIT', '2019-01-24 09:45:16', '2019-01-24 09:45:17'),
-(11, 4, 874000.00, '20190125140347', 'tiki-ONS', 'SUBMIT', '2019-01-25 07:03:47', '2019-01-25 07:03:47'),
-(12, 8, 583500.00, '20190126101401', 'jne-OKE', 'SUBMIT', '2019-01-26 03:14:01', '2019-01-26 03:14:01'),
-(13, 1, 2600000.00, '20190126134027', 'jne-CTC', 'FINISH', '2019-01-26 06:40:27', '2019-01-26 16:47:33'),
-(14, 1, 1630000.00, '20190126134757', 'pos-Express Next Day Barang', 'SUBMIT', '2019-01-26 06:47:57', '2019-01-26 06:47:58'),
-(15, 8, 330000.00, '20190126142739', 'tiki-ECO', 'SUBMIT', '2019-01-26 07:27:39', '2019-01-26 07:27:39'),
-(16, 8, 274000.00, '20190126143238', 'jne-OKE', 'SUBMIT', '2019-01-26 07:32:38', '2019-01-26 07:32:40');
+INSERT INTO `orders` (`id`, `user_id`, `total_bill`, `invoice_number`, `courier_service`, `status`, `payment_evidence`, `receipt_number`, `created_at`, `updated_at`) VALUES
+(3, 6, 2124000.00, '20190123132713', 'jne-REG', 'CANCEL', '', '', '2019-01-23 06:27:13', '2019-01-26 16:47:52'),
+(4, 1, 235000.00, '20190123185401', 'pos-Express Next Day Barang', 'PROCESS', '', '', '2019-01-23 11:54:01', '2019-01-26 16:47:20'),
+(5, 3, 769200.00, '20190123194306', 'tiki-ECO', 'SUBMIT', '', '', '2019-01-23 12:43:06', '2019-01-23 12:43:06'),
+(6, 3, 347000.00, '20190123195015', 'pos-Paket Kilat Khusus', 'SUBMIT', '', '', '2019-01-23 12:50:15', '2019-01-23 12:50:15'),
+(7, 8, 347500.00, '20190123195819', 'jne-CTCYES', 'FINISH', '', '', '2019-01-23 12:58:19', '2019-01-26 20:57:44'),
+(8, 1, 263000.00, '20190123200710', 'jne-CTC', 'SUBMIT', '', '', '2019-01-23 13:07:10', '2019-01-23 13:07:11'),
+(9, 4, 965000.00, '20190124025629', 'tiki-SDS', 'SUBMIT', '', '', '2019-01-23 19:56:29', '2019-01-23 19:56:30'),
+(10, 1, 351500.00, '20190124164516', 'tiki-TRC', 'PROCESS', 'payment-evidence/HqBGjj9DxfYRdI1YYnP6kbP5f8JN32uNgiOhJMvw.jpeg', '23492901334834', '2019-01-24 09:45:16', '2019-03-11 22:46:07'),
+(11, 4, 874000.00, '20190125140347', 'tiki-ONS', 'SUBMIT', '', '', '2019-01-25 07:03:47', '2019-01-25 07:03:47'),
+(12, 8, 583500.00, '20190126101401', 'jne-OKE', 'PROCESS', 'payment-evidence/UHBP8X18A0ClFt0WDy9EoG6pIC0SQ1JbStl5UIL5.jpeg', '', '2019-01-26 03:14:01', '2019-03-11 03:41:19'),
+(13, 1, 2600000.00, '20190126134027', 'jne-CTC', 'FINISH', 'payment-evidence/UHBP8X18A0ClFt0WDy9EoG6pIC0SQ1JbStl5UIL5.jpeg', '', '2019-01-26 06:40:27', '2019-01-26 16:47:33'),
+(14, 1, 1630000.00, '20190126134757', 'pos-Express Next Day Barang', 'PROCESS', 'payment-evidence/cMgXN0SOiBl1YqYE7oVP9E9eNvVwFo26uLMId3bJ.png', '12313123124123', '2019-01-26 06:47:57', '2019-03-15 18:50:03'),
+(15, 8, 330000.00, '20190126142739', 'tiki-ECO', 'FINISH', 'payment-evidence/cMgXN0SOiBl1YqYE7oVP9E9eNvVwFo26uLMId3bJ.png', '781093287328892', '2019-01-26 07:27:39', '2019-03-15 18:57:39'),
+(16, 8, 274000.00, '20190126143238', 'jne-OKE', 'PENDING', 'payment-evidence/GRNnHcQt2BeazoXfEzneqme7rdPwL1hcXOmSlqYB.png', '', '2019-01-26 07:32:38', '2019-03-11 03:23:57'),
+(17, 6, 220000.00, '20190127040720', 'tiki-ONS', 'PROCESS', 'payment-evidence/i4amRfC34yMg47NJJ6eKyrgMsglji0JaHAvwl8a6.png', '123123123123', '2019-01-26 21:07:20', '2019-03-15 18:40:24'),
+(18, 6, 165000.00, '20190127042110', 'tiki-REG', 'SUBMIT', '', '', '2019-01-26 21:21:10', '2019-01-26 21:21:11'),
+(19, 4, 31600.00, '20190128102310', 'jne-OKE', 'SUBMIT', '', '', '2019-01-28 03:23:10', '2019-01-28 03:23:12'),
+(20, 6, 639500.00, '20190205072314', 'tiki-ECO', 'PROCESS', 'payment-evidence/Ycr92881dXPYiuHBCW8f9HBlCD1KBvLbGBCL5Vjf.jpeg', '05211640000093', '2019-02-05 00:23:14', '2019-03-11 21:41:46'),
+(21, 8, 48000.00, '20190316013114', 'jne-REG', 'SUBMIT', NULL, NULL, '2019-03-15 18:31:14', '2019-03-15 18:31:15');
 
 -- --------------------------------------------------------
 
@@ -724,7 +733,13 @@ INSERT INTO `order_product` (`id`, `order_id`, `product_id`, `quantity`, `create
 (24, 14, 18, 1, '2019-01-26 06:47:57', '2019-01-26 06:47:57'),
 (25, 15, 5, 2, '2019-01-26 07:27:39', '2019-01-26 07:27:39'),
 (26, 15, 11, 1, '2019-01-26 07:27:39', '2019-01-26 07:27:39'),
-(27, 16, 11, 1, '2019-01-26 07:32:38', '2019-01-26 07:32:38');
+(27, 16, 11, 1, '2019-01-26 07:32:38', '2019-01-26 07:32:38'),
+(28, 17, 15, 1, '2019-01-26 21:07:20', '2019-01-26 21:07:20'),
+(29, 18, 18, 1, '2019-01-26 21:21:11', '2019-01-26 21:21:11'),
+(30, 19, 19, 1, '2019-01-28 03:23:10', '2019-01-28 03:23:10'),
+(31, 20, 2, 2, '2019-02-05 00:23:14', '2019-02-05 00:23:14'),
+(32, 20, 13, 1, '2019-02-05 00:23:14', '2019-02-05 00:23:14'),
+(33, 21, 5, 1, '2019-03-15 18:31:14', '2019-03-15 18:31:14');
 
 -- --------------------------------------------------------
 
@@ -770,20 +785,21 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `name`, `slug`, `description`, `producer`, `image`, `price`, `weight`, `views`, `stock`, `status`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Daya Baudouin 1400hp Besar', 'daya-baudouin-1400hp-besar', 'Ini adalah mesin kapal tempur', 'PT Sentosa Karya', 'product-images/28lwObMsglpeZWhAHh7kCLYGIsvJyGTBv7Qs69ux.jpeg', 950000.00, 35.00, 28, 0, 'DRAFT', 2, 2, NULL, '2019-01-08 10:12:03', '2019-01-20 09:12:01', NULL),
-(2, 'Ban Sepeda Motor', 'ban-sepeda-motor', 'Ini adalah ban sepeda motor bebek', 'PT Abadi Nugraha', 'product-images/4mvz5zEQKp6Y9Q4xVFtfX7ecwkxr5oNSYS1M2yOD.jpeg', 100000.00, 1.00, 146, 20, 'PUBLISH', 2, 2, NULL, '2019-01-08 12:55:11', '2019-01-08 19:43:34', NULL),
+(2, 'Ban Sepeda Motor', 'ban-sepeda-motor', 'Ini adalah ban sepeda motor bebek', 'PT Abadi Nugraha', 'product-images/4mvz5zEQKp6Y9Q4xVFtfX7ecwkxr5oNSYS1M2yOD.jpeg', 100000.00, 1.00, 146, 18, 'PUBLISH', 2, 2, NULL, '2019-01-08 12:55:11', '2019-02-05 00:23:14', NULL),
 (3, 'Kampas Rem', 'kampas-rem', 'Ini adalah kampas rem', 'Jun Mei Del', 'product-images/Q6fvsWtsA8Fkcf7DTXfPsIwXEaF45rc40E0nUbbB.jpeg', 35000.00, 0.02, 67, 53, 'PUBLISH', 2, NULL, NULL, '2019-01-08 12:56:06', '2019-01-08 20:37:19', NULL),
 (4, 'Dongkrak Buaya', 'dongkrak-buaya', 'Ini adalah dongkrak buaya', 'Rio Tinto Group', 'product-images/SlT1qqbcgWETXa4S01eITKol6ptRJjqPV6Um33ri.jpeg', 250000.00, 2.00, 3, 7, 'PUBLISH', 2, 2, NULL, '2019-01-08 12:57:10', '2019-01-23 12:43:06', NULL),
-(5, 'Footstep Motor', 'footstep-motor', 'Footstep pijakan kaki karet foot step depan vixion scorpio', 'Rio Tinto Group', 'product-images/p9BoW5zY7rkDmKthF5Gregsq6Swaj1DLFBFfoYFG.jpeg', 30000.00, 0.02, 14, 27, 'PUBLISH', 2, 2, NULL, '2019-01-20 08:32:05', '2019-01-26 07:27:39', NULL),
-(10, 'Paket Ottoban Wheels A2000 + Ban', 'paket-ottoban-wheels', 'Set velg dan ban mobil, Ukuran ring 11 Inch, Terdiri dari 4 pcs velg dan 4 pcs ban, Paket sudah termasuk biaya pemasangan, balancing, dan nitrogen', 'PT Freeport McMoran', 'product-images/nmqlyNeUylSQQ6jzLDeaaASBHlLW4BjnZruveYPx.jpeg', 1200000.00, 5.00, 78, 0, 'DRAFT', 2, 2, NULL, '2019-01-20 09:10:04', '2019-01-20 09:25:39', NULL),
-(11, 'Shell Rimula R4X 15W-40 Oli Pelumas', 'shell-rimula-r4x-15w-40-oli-pelumas', 'Dapat melindungi mesin pada 3 area penting, yaitu acid control, deposit control, dan wear control, Cocok digunakan untuk mesin diesel heavy duty dan turbo modern, Berat Bersih : 5 Liter', 'PT Aplikasi Karya Anak Bangsa', 'product-images/5J797D7HSX3po8XQ4pO9YPxsbiCl5sQTuj0wCUU2.jpeg', 258000.00, 0.60, 460, 97, 'PUBLISH', 2, NULL, NULL, '2019-01-20 09:16:01', '2019-01-26 07:32:39', NULL),
+(5, 'Footstep Motor', 'footstep-motor', 'Footstep pijakan kaki karet foot step depan vixion scorpio', 'Rio Tinto Group', 'product-images/p9BoW5zY7rkDmKthF5Gregsq6Swaj1DLFBFfoYFG.jpeg', 30000.00, 0.02, 14, 26, 'PUBLISH', 2, 2, NULL, '2019-01-20 08:32:05', '2019-03-15 18:31:14', NULL),
+(10, 'Paket Ottoban Wheels A2000 + Ban', 'paket-ottoban-wheels', '<p>Set velg dan ban mobil,</p>\r\n\r\n<p>Ukuran ring 11 Inch, Terdiri dari 4 pcs velg dan 4 pcs ban,</p>\r\n\r\n<p>Paket sudah termasuk biaya pemasangan, balancing, dan nitrogen</p>', 'PT Freeport McMoran', 'product-images/nmqlyNeUylSQQ6jzLDeaaASBHlLW4BjnZruveYPx.jpeg', 1200000.00, 5.00, 78, 0, 'DRAFT', 2, 2, NULL, '2019-01-20 09:10:04', '2019-01-30 04:13:11', NULL),
+(11, 'Shell Rimula R4X 15W-40 Oli Pelumas', 'shell-rimula-r4x-15w-40-oli-pelumas', '<p>Dapat melindungi mesin pada 3 area penting, yaitu acid control, deposit control, dan wear control,</p>\r\n\r\n<p>Cocok digunakan untuk mesin diesel heavy duty dan turbo modern,</p>\r\n\r\n<p>Berat Bersih : 5 Liter</p>', 'PT Aplikasi Karya Anak Bangsa', 'product-images/5J797D7HSX3po8XQ4pO9YPxsbiCl5sQTuj0wCUU2.jpeg', 258000.00, 0.60, 460, 97, 'PUBLISH', 2, 2, NULL, '2019-01-20 09:16:01', '2019-01-30 04:11:43', NULL),
 (12, 'Hankook Kinergy 185/65 R15 Ban', 'hankook-kinergy-18565-r15-ban', 'Memiliki paduan teknologi dan desain yang memberikan efisiensi bahan bakar dan kinerja yang luar biasa', 'PT Dinamika Indonesia', 'product-images/KK53I769YWiSYv1b5IUDhrYeotmVwN7haE7w7rki.jpeg', 420000.00, 6.00, 300, 4, 'PUBLISH', 2, 2, NULL, '2019-01-20 09:18:46', '2019-01-26 06:47:57', NULL),
-(13, 'Repsol Multivalvulas 10W-40 Oli Pelumas', 'repsol-multivalvulas-10w-40-oli-pelumas', 'Oli Pelumas\r\nDiformulasikan khusus untuk mesin diesel\r\nDapat memberikan perlindungan bagian-bagian mesin yang bergesek dari keausan dan meningkatkan performa mesin secara optimal pada kondisi rendah maupun tinggi\r\nMelindungi bagian-bagian logam mesin dari overheating & overloading\r\nMembuat mesin menjadi lebih hemat bahan bakar dan memperpanjang usia pemakaian mesin', 'Repsol', 'product-images/BF9CToNN1K2hcvJVnr7QGh7aiVLTCBXskKZjEZ4a.jpeg', 337500.00, 0.30, 122, 36, 'PUBLISH', 2, 2, NULL, '2019-01-20 09:20:55', '2019-01-26 03:14:01', NULL),
-(14, 'Aki Mobil Kering GS Maintenance Free NS40ZL', 'aki-mobil-kering-gs-maintenance-free-ns40zl', 'Aki bebas perawatan \r\nAki dijamin produksi terbaru\r\nTinggal pasang dan starter mobil\r\nDidesain khusus untuk iklim tropis Indonesia\r\nTanpa Perawatan, Tidak perlu lagi mengecek dan menambah air aki, sehingga menghemat waktu dan biaya perawatan\r\nDaya start tinggi, dapat menyimpan energi listrik lebih lama, bahkan cocok untuk digunakan pada kendaraan yang relatif jarang dipakai atau kondisi mesin mobil dingin\r\nBebas Korosi/Karat sehingga kebersihan mobil dan aki Anda lebih terjaga', 'IBM', 'product-images/kDJww71fsJj6Urss8fxdpwMzJel8EX5OLGmrgcin.jpeg', 750000.00, 0.70, 56, 27, 'PUBLISH', 2, NULL, NULL, '2019-01-20 09:22:16', '2019-01-26 06:40:40', NULL),
-(15, 'Smart Fast Charger accu/aki 12v 10a', 'smart-fast-charger-accuaki-12v-10a', 'BARANG READY !! \r\nLangsung order saja karena selalu ready... \r\n\r\nBattery Charger 10A\r\nMA-1210\r\nOutput : 12V \r\nMade in china\r\n\r\nUkuran Charger :\r\nPanjang : 15cm\r\nLebar = 6,5cm\r\nTinggi = 4,5cm\r\n\r\nPanjang kabel output = 50cm\r\nPanjang kabel Input = 130cm\r\n\r\nBerat = 500gram\r\n\r\nAutomatic Charger Lebih Awet untuk pemakaian lama sehingga aki/battery tidak mudah rusak\r\n\r\nSangat Berguna Untuk Perawatan Accu Kendaraan Anda\r\n\r\nDilengkapi lampu LED indikator\r\nwarna hijau = power hidup(tersambung ke listrik)\r\nwarna merah = proses charging\r\nFull charging / otomatis cut-off (kembali warna hijau)\r\n\r\nInput Voltage AC 100-240V \r\n\r\nAUTOMATE STOP WHEN THE BATTERY FULLY CHARGED', 'IBM', 'product-images/GRwmJg4fqcU4JtH6jzzq0OUmFxNVnBDucWSRJbpz.png', 165000.00, 0.70, 24, 1, 'PUBLISH', 2, 2, NULL, '2019-01-20 09:28:46', '2019-01-26 06:40:27', NULL),
-(16, 'Karburator KEIHIN PE 24 PE 26 PE 28', 'karburator-keihin-pe-24-pe-26-pe-28', 'Karbulator PE24 PE26 PE28 KEIHIN\r\n\r\nTersedia PE24 PE26 PE28 sudah termasuk Skep, Per Skep, Main jet, Pilot Jet, Selang Tinggal pasang saja PNP langsung \r\n\r\nharga sama Pe24 Pe26 & Pe28 semua sama jika order harus kabarin di keterangan nya\r\n\r\nsetelah terpasang tinggal di jalan saja, Tanpa SETTING lagi sudah di setting by pabrik KEIHIN\r\n\r\nmerek KEIHIN Original di atas tanpa setting GARANSI 6 BULAN jangan buang kardus ny', 'PT Aplikasi Karya Anak Bangsa', 'product-images/bssxDM7QzGcKEcmyaAlqdMFefVGwu8JOjHU2imqn.png', 115000.00, 0.05, 8, 7, 'PUBLISH', 2, NULL, NULL, '2019-01-20 09:30:54', '2019-01-26 03:14:01', NULL),
+(13, 'Repsol Multivalvulas 10W-40 Oli Pelumas', 'repsol-multivalvulas-10w-40-oli-pelumas', '<p><strong>Oli Pelumas </strong></p>\r\n\r\n<ul>\r\n	<li>Diformulasikan khusus untuk mesin diesel</li>\r\n	<li>Dapat memberikan perlindungan bagian-bagian mesin yang bergesek dari keausan dan meningkatkan performa mesin secara optimal pada kondisi rendah maupun tinggi</li>\r\n	<li>Melindungi bagian-bagian logam mesin dari overheating &amp; overloading</li>\r\n	<li>Membuat mesin menjadi lebih hemat bahan bakar dan memperpanjang usia pemakaian mesin</li>\r\n</ul>', 'Repsol', 'product-images/BF9CToNN1K2hcvJVnr7QGh7aiVLTCBXskKZjEZ4a.jpeg', 337500.00, 0.30, 122, 35, 'PUBLISH', 2, 2, NULL, '2019-01-20 09:20:55', '2019-02-05 00:23:14', NULL),
+(14, 'Aki Mobil Kering GS Maintenance Free NS40ZL', 'aki-mobil-kering-gs-maintenance-free-ns40zl', '<ul>\r\n	<li>Aki bebas perawatan</li>\r\n	<li>Aki dijamin produksi terbaru</li>\r\n	<li>Tinggal pasang dan starter mobil</li>\r\n	<li>Didesain khusus untuk iklim tropis Indonesia</li>\r\n	<li>Tanpa Perawatan,</li>\r\n	<li>Tidak perlu lagi mengecek dan menambah air aki, sehingga menghemat waktu dan biaya perawatan</li>\r\n	<li>Daya start tinggi, dapat menyimpan energi listrik lebih lama, bahkan cocok untuk digunakan pada kendaraan yang relatif jarang dipakai atau kondisi mesin mobil dingin</li>\r\n	<li>Bebas Korosi/Karat sehingga kebersihan mobil dan aki Anda lebih terjaga</li>\r\n</ul>', 'IBM', 'product-images/kDJww71fsJj6Urss8fxdpwMzJel8EX5OLGmrgcin.jpeg', 750000.00, 0.70, 56, 27, 'PUBLISH', 2, 2, NULL, '2019-01-20 09:22:16', '2019-01-30 04:09:36', NULL),
+(15, 'Smart Fast Charger accu/aki 12v 10a', 'smart-fast-charger-accuaki-12v-10a', '<p>BARANG READY !! Langsung order saja karena selalu ready...</p>\r\n\r\n<ol>\r\n	<li>Battery Charger 10A MA-1210 Output : 12V</li>\r\n	<li>Made in china Ukuran Charger :</li>\r\n	<li>Panjang : 15cm</li>\r\n	<li>Lebar = 6,5cm</li>\r\n	<li>Tinggi = 4,5cm</li>\r\n	<li>Panjang kabel output = 50cm</li>\r\n	<li>Panjang kabel Input = 130cm Berat = 500gram</li>\r\n	<li>Automatic Charger Lebih Awet untuk pemakaian lama sehingga aki/battery tidak mudah rusak</li>\r\n	<li>Sangat Berguna Untuk Perawatan Accu Kendaraan Anda</li>\r\n	<li>Dilengkapi lampu LED indikator warna hijau = power hidup(tersambung ke listrik) warna merah = proses charging</li>\r\n	<li>Full charging / otomatis cut-off (kembali warna hijau) Input Voltage AC 100-240V AUTOMATE STOP WHEN THE BATTERY FULLY CHARGED</li>\r\n</ol>', 'IBM', 'product-images/GRwmJg4fqcU4JtH6jzzq0OUmFxNVnBDucWSRJbpz.png', 165000.00, 0.70, 24, 0, 'PUBLISH', 2, 2, NULL, '2019-01-20 09:28:46', '2019-01-30 04:03:12', NULL),
+(16, 'Karburator KEIHIN PE 24 PE 26 PE 28', 'karburator-keihin-pe-24-pe-26-pe-28', '<p>Karbulator PE24 PE26 PE28 KEIHIN</p>\r\n\r\n<ul>\r\n	<li>Tersedia PE24 PE26 PE28 sudah termasuk Skep, Per Skep, Main jet, Pilot Jet,</li>\r\n	<li>Selang Tinggal pasang saja</li>\r\n	<li>PNP langsung harga sama Pe24 Pe26 &amp; Pe28 semua sama</li>\r\n	<li>jika order harus kabarin di keterangan nya setelah terpasang tinggal di jalan saja,</li>\r\n	<li>Tanpa SETTING lagi sudah di setting by pabrik KEIHIN</li>\r\n	<li>merek KEIHIN Original di atas tanpa setting GARANSI 6 BULAN jangan buang kardus nya</li>\r\n</ul>', 'PT Aplikasi Karya Anak Bangsa', 'product-images/bssxDM7QzGcKEcmyaAlqdMFefVGwu8JOjHU2imqn.png', 115000.00, 0.05, 8, 7, 'PUBLISH', 2, 2, NULL, '2019-01-20 09:30:54', '2019-01-30 04:06:46', NULL),
 (17, 'Pneumatic Rubber Fender', 'pneumatic-rubber-fender', 'Fungsi utama dari marine rubber fender / fender pelabuhan / fender kapal adalah melindungi kapal / perahu dan struktur tempat berlabuh / dermaga dengan cara menyerap energi benturan yang terjadi.', 'PT Sentosa Karya', 'product-images/HxssEqbAufx4gW0SD8nVWUSNwGHlgTa8TeZuonM7.jpeg', 500000.00, 2.00, 67, 20, 'PUBLISH', 2, NULL, NULL, '2019-01-20 09:32:50', '2019-01-26 06:47:57', NULL),
-(18, 'Rantai Jangkar Galvanis', 'rantai-jangkar-galvanis', 'Rantai galvanis, tersedia berbagai ukuran.', 'PT Sentosa Karya', 'product-images/OtPpipQSLqqm5RT0obWARRbZ6AHpgNIuJnrve7Qi.jpeg', 140000.00, 0.90, 69, 12, 'PUBLISH', 2, NULL, NULL, '2019-01-20 09:34:07', '2019-01-26 06:47:57', NULL),
-(19, 'Kapasitor Mesin Cuci 5 + 10 Uf - 450V', 'kapasitor-mesin-cuci-5-10-uf-450v', 'Kapasitor (Capacitor) Mesin Cuci\r\nMerk JP\r\nUkuran 5 + 10 uf - 450V', 'PT PAK', 'product-images/H8ElmxrvbH8GcbzeB8Us5FKaCeVK3uwOe4an4LEn.png', 24600.00, 0.85, 2, 3, 'PUBLISH', 2, NULL, NULL, '2019-01-20 09:38:31', '2019-01-23 12:43:06', NULL);
+(18, 'Rantai Jangkar Galvanis', 'rantai-jangkar-galvanis', 'Rantai galvanis, tersedia berbagai ukuran.', 'PT Sentosa Karya', 'product-images/OtPpipQSLqqm5RT0obWARRbZ6AHpgNIuJnrve7Qi.jpeg', 140000.00, 0.90, 69, 11, 'PUBLISH', 2, NULL, NULL, '2019-01-20 09:34:07', '2019-01-26 21:21:11', NULL),
+(19, 'Kapasitor Mesin Cuci 5 + 10 Uf - 450V', 'kapasitor-mesin-cuci-5-10-uf-450v', '<p>Kapasitor (Capacitor) Mesin Cuci</p>\r\n\r\n<p>Merk JP Ukuran 5 + 10 uf - 450V</p>', 'PT PAK', 'product-images/H8ElmxrvbH8GcbzeB8Us5FKaCeVK3uwOe4an4LEn.png', 24600.00, 0.85, 2, 2, 'PUBLISH', 2, 2, NULL, '2019-01-20 09:38:31', '2019-01-30 04:05:02', NULL),
+(20, 'Spion Yamaha N-Max', 'spion-yamaha-n-max', '<p><em>spion lipat + sen igawa Yamaha nmax barang sesuai foto dan warna grey</em></p>\r\n\r\n<p><strong>penting.!!!</strong></p>\r\n\r\n<p>setiap barang yang kami kirim sudah di test terlebih dahulu untuk memastikan bahwa kondisi barang bagus tidak ada cacat atau rusak,</p>\r\n\r\n<p><u>untuk kerusakan akibat salah pemasangan itu tanggung jawab pembeli,</u></p>\r\n\r\n<p>cantumkan jenis barang,warna,dan ukuran di pesan lapak kami agar tidak terjadi kesalahan dalam pengiriman barang</p>\r\n\r\n<ul>\r\n	<li>Oke</li>\r\n	<li>Mantab</li>\r\n	<li>Yes</li>\r\n</ul>', 'Maspion Group', 'product-images/cs9wS8T8v3hA7WDbGFSnE7wem7cEB3Zd3boa6SmX.jpeg', 255000.00, 0.50, 0, 45, 'DRAFT', 1, 2, NULL, '2019-01-30 01:50:30', '2019-03-10 04:31:36', NULL);
 
 -- --------------------------------------------------------
 
@@ -867,12 +883,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `username`, `roles`, `address`, `city_id`, `province_id`, `phone`, `avatar`, `status`, `api_token`) VALUES
-(1, 'Fathoni Nur Muhammad', 'fathonimuhammad580@gmail.com', NULL, '$2y$10$JoKfCVSXpBcKV58l5bThc.MRm1kQbBU48bgpnTZrXzhZf0xhdhnN2', 'nPZiXeXAFEBdBdwRoUORphGxDp92JbnlUj4zxy3MGPCuqSCOjLKjRGfT84C1', '2019-01-06 02:10:38', '2019-01-26 17:15:39', 'thoninumad', '[\"STAFF\",\"CUSTOMER\"]', 'Griya Candi Pratama A3/12, Durungbedug RT 29 RW 07, Candi, Sidoarjo', 409, 11, '085203500628', 'avatars/4Bcvf87cfMxChkd45PHcSmYAHM0ePaRK3orY2F6T.jpeg', 'ACTIVE', NULL),
-(2, 'Site Administrator', 'administrator@larashop.test', NULL, '$2y$10$g4lNiTjTXZT.jOgrDBCJuu1DgV1AtzUkmBGUCuK5EivqUtNPAAURO', 'Jz5vwSdCnkiamWM3MbUNFWoTNFiI1QIO0qrJ3ZBkyqRN39Ge32sdPaFuOOSp', '2019-01-06 02:38:15', '2019-01-26 16:22:15', 'administrator', '[\"ADMIN\"]', 'Keputih Gg 2 No 27A, Sukolilo, Surabaya, Jawa Timur', 409, 11, '085203500629', 'avatars/SXjkAeqX8FmivvjECcORMe32YXRoL6DTjhttiWk3.png', 'ACTIVE', NULL),
+(1, 'Fathoni Nur Muhammad', 'fathonimuhammad580@gmail.com', NULL, '$2y$10$JoKfCVSXpBcKV58l5bThc.MRm1kQbBU48bgpnTZrXzhZf0xhdhnN2', 'cRcph8Kw5OK3iplPXVNZytvobyUUB4pPiUaFmnycB8VliUkjlqFJztE2BWuW', '2019-01-06 02:10:38', '2019-03-11 21:26:52', 'thoninumad', '[\"STAFF\",\"CUSTOMER\"]', 'Griya Candi Pratama A3/12, Durungbedug RT 29 RW 07, Candi, Sidoarjo', 409, 11, '085203500628', 'avatars/4Bcvf87cfMxChkd45PHcSmYAHM0ePaRK3orY2F6T.jpeg', 'ACTIVE', 'G5UDLxjhlZiCbHAWRb2QoWvebNkvSnTxHxWYiWhuMhtnuh1fPJ73cLPWlRL7'),
+(2, 'Site Administrator', 'administrator@larashop.test', NULL, '$2y$10$g4lNiTjTXZT.jOgrDBCJuu1DgV1AtzUkmBGUCuK5EivqUtNPAAURO', 'AIEFsHeIghtIsb6qReZBLfCnoa8LlmCRwJiw9gOLMtj3BslSTJWTNgvwBfJZ', '2019-01-06 02:38:15', '2019-03-10 04:32:58', 'administrator', '[\"ADMIN\"]', 'Keputih Gg 2 No 27A, Sukolilo, Surabaya, Jawa Timur', 409, 11, '085203500626', 'avatars/SXjkAeqX8FmivvjECcORMe32YXRoL6DTjhttiWk3.png', 'ACTIVE', NULL),
 (3, 'Syafrie Dwi Faisall', 'syafriedwi@gmail.com', NULL, '$2y$10$1hYJDqMf22fdLIbdTPNJkOvpEJeBMHnxldxV0ODRtDouViF/Qt3.O', NULL, '2019-01-06 21:00:39', '2019-01-25 21:23:50', 'syafriedwi', '[\"STAFF\"]', 'Jalan Rimba Mulya No. 10, Oro Oro Ombo, Kartoharjo, Kota Madiun', 248, 11, '091982371982', 'avatars/5CSp0W9EgrEmosXQNocdMIsFgkBTBEfRAe2SQ0Tx.jpeg', 'INACTIVE', NULL),
-(4, 'Aldy Syah D R', 'aldysyah@gmail.com', NULL, '$2y$10$nUcAq2ZqLt9jRZW256AKnudV8/NxxkxfIxdjWRBbPjSpmRprAr1Ua', 'Hg5X2sIIyGyG832lsQPpJKcKpaA4YjtcPjTI5wQL0GSAejCo1KLVCrMcDoYd', '2019-01-08 22:26:23', '2019-01-25 10:34:50', 'aldysyah', '[\"CUSTOMER\"]', 'Kencur RT 5 RW 1, Perak, Jombang, Jawa Timur', 164, 11, '087651908234', 'avatars/j2nOtr1Hc96b67nO33bq87pAPA8ykPDBJ6U72dpl.jpeg', 'ACTIVE', '074nYyPjC3eL3cfrDTh78hSnfXzjx16enEUx98QnqzD9s4I1Si5BcPcK6Wt1'),
-(6, 'Fanny Dwi Putra Pamungkas', 'fanny@gmail.com', NULL, '$2y$10$sdI/kMV85Q8FTpRn1felLewkqHkSxUz8YxFovm/50Qzc3J/e77e76', NULL, '2019-01-19 07:31:52', '2019-01-26 16:06:22', 'fannydwip', '[\"CUSTOMER\"]', 'GCP, Desa Kemuning RT 6 RW 1, Kedungkendo, Bengkulu Utara 509890', 65, 4, '082901890780', 'avatars/qvqZSrQsiFulmM1Cw4R3JIMAs54wqW0l0CuXs5ZR.jpeg', 'ACTIVE', NULL),
-(8, 'Joko Yulianto Nugroho', 'jokoyuln123@gmail.com', NULL, '$2y$10$qSgKEei8XqQ0HYv16qkDxuRk4Odq/BQsNkKvi8Q0avl78TkoduEwu', NULL, '2019-01-22 04:35:17', '2019-01-26 17:15:53', 'jokoyuln', '[\"CUSTOMER\"]', 'Keputih Gg 2 No. 27A, Sukolilo, Surabaya', 76, 10, '086789201701', 'avatars/QqGsQYBVOXmvkUuZdWkUv6GFKSQv9T8uAwII63xh.jpeg', 'ACTIVE', 'mDSYruVJg7a5xs9bGi6wuW4UnHfo3b2eS0ketF7fAmezYMfjgnzyFIQUDii0');
+(4, 'Aldy Syah D R', 'aldysyah@gmail.com', NULL, '$2y$10$nUcAq2ZqLt9jRZW256AKnudV8/NxxkxfIxdjWRBbPjSpmRprAr1Ua', 'Hg5X2sIIyGyG832lsQPpJKcKpaA4YjtcPjTI5wQL0GSAejCo1KLVCrMcDoYd', '2019-01-08 22:26:23', '2019-01-28 03:22:37', 'aldysyah', '[\"CUSTOMER\"]', 'Kencur RT 5 RW 1, Perak, Jombang, Jawa Timur', 164, 11, '087651908234', 'avatars/j2nOtr1Hc96b67nO33bq87pAPA8ykPDBJ6U72dpl.jpeg', 'ACTIVE', 'YR1Szz4ArMNQ3hfHVaIToghakvOzT0t3nhTzxXH4Hqz5jrOeC7OySuGPEtKG'),
+(6, 'Fanny Dwi Putra Pamungkas', 'fanny@gmail.com', NULL, '$2y$10$sdI/kMV85Q8FTpRn1felLewkqHkSxUz8YxFovm/50Qzc3J/e77e76', NULL, '2019-01-19 07:31:52', '2019-03-11 21:26:35', 'fannydwip', '[\"CUSTOMER\"]', 'GCP, Desa Kemuning RT 6 RW 1, Kedungkendo, Bengkulu Utara 509890', 65, 4, '082901890780', 'avatars/qvqZSrQsiFulmM1Cw4R3JIMAs54wqW0l0CuXs5ZR.jpeg', 'ACTIVE', NULL),
+(8, 'Joko Yulianto Nugroho', 'jokoyuln123@gmail.com', NULL, '$2y$10$qSgKEei8XqQ0HYv16qkDxuRk4Odq/BQsNkKvi8Q0avl78TkoduEwu', NULL, '2019-01-22 04:35:17', '2019-03-15 19:08:25', 'jokoyuln', '[\"CUSTOMER\"]', 'Keputih Gg 2 No. 27A, Sukolilo, Surabaya', 76, 10, '086789201701', 'avatars/QqGsQYBVOXmvkUuZdWkUv6GFKSQv9T8uAwII63xh.jpeg', 'ACTIVE', '6ZhUPsfrKrqsfab0evtO4H4ycfZDCayZrcIHmp1gbhkYzfB19XQIxr1yviWL');
 
 --
 -- Indexes for dumped tables
@@ -964,7 +980,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT untuk tabel `category_product`
 --
 ALTER TABLE `category_product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT untuk tabel `cities`
@@ -982,19 +998,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `order_product`
 --
 ALTER TABLE `order_product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `provinces`

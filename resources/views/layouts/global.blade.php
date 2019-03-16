@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{{asset('polished/polished.min.css')}}">
         <link rel="stylesheet" href="{{asset('polished/iconic/css/open-iconic-bootstrap.min.css')}}">
 
-        @yield("select2-css")
+        @yield("css")
 
         <style>
             .grid-highlight {
@@ -56,7 +56,6 @@
 
                 <div class="dropdown-menu dropdown-menu-right" id="navbar-dropdown">
                     <a href="{{route('profile')}}" class="dropdown-item">Profile</a>
-                    <a href="#" class="dropdown-item">Setting</a>
                     <div class="dropdown-divider"></div>
                     <li>
                         <form action="{{route("logout")}}" method="POST">
@@ -82,7 +81,6 @@
                         <div class="d-block d-md-none">
                             <div class="dropdown-divider"></div>
                             <li><a href="#"> Profile</a></li>
-                            <li><a href="#"> Setting</a></li>
                             <li>
                                 <form action="{{route("logout")}}" method="POST">
                                     @csrf
@@ -91,7 +89,6 @@
                             </li>
                         </div>
                     </ul>
-                    <div class="pl-3 d-none d-md-block position-fixed" style="bottom: 0px"><span class="oi oi-cog"></span> Setting</div>
                 </div>
 
                 <div class="col-lg-10 col-md-9 p-4">
@@ -113,6 +110,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-        @yield("select2-js")
+        @yield("js")
     </body>
 </html>

@@ -13,6 +13,7 @@
             <select name="status" class="form-control" id="status">
                 <option value="">ANY</option>
                 <option {{Request::get('status') == "SUBMIT" ? "selected" : ""}} value="SUBMIT">SUBMIT</option>
+                <option {{Request::get('status') == "PENDING" ? "selected" : ""}} value="PENDING">PENDING</option>
                 <option {{Request::get('status') == "PROCESS" ? "selected" : ""}} value="PROCESS">PROCESS</option>
                 <option {{Request::get('status') == "FINISH" ? "selected" : ""}} value="FINISH">FINISH</option>
                 <option {{Request::get('status') == "CANCEL" ? "selected" : ""}} value="CANCEL">CANCEL</option>
@@ -46,6 +47,8 @@
                         <td>{{$order->invoice_number}}</td>
                         <td>
                             @if($order->status == "SUBMIT")
+                                <span class="badge bg-danger text-light">{{$order->status}}</span>
+                            @elseif($order->status == "PENDING")
                                 <span class="badge bg-warning text-light">{{$order->status}}</span>
                             @elseif($order->status == "PROCESS")
                                 <span class="badge bg-info text-light">{{$order->status}}</span>

@@ -2,7 +2,7 @@
 
 @section('title') Edit Product @endsection
 
-@section('select2-css')
+@section('css')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
 @endsection
 
@@ -101,7 +101,7 @@
 
 @endsection
 
-@section('select2-js')
+@section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 <script>
@@ -124,6 +124,15 @@ categories.forEach(function(category) {
     var option = new Option(category.name, category.id, true, true);
     $('#categories').append(option).trigger('change');
 });
+</script>
+
+<script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+<script>
+    var description = document.getElementById("description");
+      CKEDITOR.replace(description, {
+      language:'en-gb'
+    });
+    CKEDITOR.config.allowedContent = true;
 </script>
 
 @endsection

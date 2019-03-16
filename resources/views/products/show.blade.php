@@ -22,7 +22,7 @@
             <br><br>
 
             <label><b>Product Description</b></label><br>
-            {{$product->description}}
+            {!!html_entity_decode($product->description)!!}
             <br><br>
 
             <label><b>Product Producer</b></label><br>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Gate;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -21,11 +22,16 @@ class ProductController extends Controller
     {
         $status = $request->get('status');
         $keyword = $request->get('keyword') ? $request->get('keyword') : '';
+        $user = Auth::user();
 
         if($status) {
-            $products = \App\Product::with('categories')->where('name', "LIKE", "%$keyword%")->where('status', strtoupper($status))->paginate(10);
+            $products = \App\Product::with('categories')->where('name', "LIKE", "%$keyword%")->where('status', strtoupper($status))->orderBy('id', 'DESC')->paginate(10);
         } else {
-            $products = \App\Product::with('categories')->where('name', "LIKE", "%$keyword%")->paginate(10);
+            if(array_intersect(["STAFF"], json_decode($user->roles))) {
+                $products = \App\Product::with('categories')->where('name', "LIKE", "%$keyword%")->where('created_by', Auth::user()->id)->orderBy('id', 'DESC')->paginate(10);
+            } else {
+                $products = \App\Product::with('categories')->where('name', "LIKE", "%$keyword%")->orderBy('id', 'DESC')->paginate(10);
+            }
         }
 
         return view('products.index', ['products' => $products]);
@@ -43,7 +49,7 @@ class ProductController extends Controller
             "description" => "required|min:20|max:1000",
             "producer" => "string|max:191",
             "price" => "required|digits_between:0,10",
-            "weight" => "required|digits_between:0,10",
+            "weight" => "required",
             "stock" => "required|digits_between:0,10",
             "image" => "required|image",
             "categories" => "required"
@@ -104,7 +110,7 @@ class ProductController extends Controller
             "description" => "required|min:20|max:1000",
             "producer" => "string|max:191",
             "price" => "required|digits_between:0,10",
-            "weight" => "required|digits_between:0,10",
+            "weight" => "required",
             "stock" => "required|digits_between:0,10",
             "categories" => "required"
         ])->validate();

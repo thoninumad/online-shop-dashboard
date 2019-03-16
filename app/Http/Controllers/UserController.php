@@ -25,15 +25,15 @@ class UserController extends Controller
 
         if($filterKeyword) {
             if($status) {
-                $users = \App\User::where('email', 'LIKE', "%$filterKeyword%")->where('status', $status)->paginate(10);
+                $users = \App\User::where('email', 'LIKE', "%$filterKeyword%")->where('status', $status)->orderBy('id', 'DESC')->paginate(10);
             } else {
-                $users = \App\User::where('email', 'LIKE', "%$filterKeyword%")->paginate(10);
+                $users = \App\User::where('email', 'LIKE', "%$filterKeyword%")->orderBy('id', 'DESC')->paginate(10);
             }
         } else {
             if($status) {
-                $users = \App\User::where('status', $status)->paginate(10);
+                $users = \App\User::where('status', $status)->orderBy('id', 'DESC')->paginate(10);
             } else {
-                $users = \App\User::paginate(10);
+                $users = \App\User::orderBy('id', 'DESC')->paginate(10);
             }
         }
 
