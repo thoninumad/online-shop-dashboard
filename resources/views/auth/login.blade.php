@@ -41,7 +41,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-12">
-                                <button type="submit" class="btn-block btn btn-primary">{{ __('Login') }}</button>
+                                <button type="submit" class="btn-block btn" style="background-color:#bd1544;color:#fff;">{{ __('Login') }}</button>
                                 <br>
                                 <a class="btn btn-link pl-0" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
                             </div>
